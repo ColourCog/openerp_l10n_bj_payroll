@@ -2,7 +2,7 @@
 {
     'name': 'Benin - Payroll',
     'category': 'Localization',
-    'author': 'OpenERP SA',
+    'author': 'ColourCog.com',
     'depends': ['hr_payroll'],
     'version': '1.0',
     'description': """
@@ -10,10 +10,7 @@ Benin Payroll Rules.
 ======================
 
     * Employee Details
-    * Allowances/Deductions
-    * Employee Payslip
-    * Integrated with Holiday Management
-    * CNSS, IPTS, AIB
+    * CNSS, IPTS, AIB, VPS
     """,
     'data':[
         'l10n_bj_hr_payroll_view.xml',
