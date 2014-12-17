@@ -99,8 +99,8 @@
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = 0.0
-if categories.GROSS &gt; 500000:
-    if categories.GROSS &lt;= 1300000:
+if categories.GROSS &gt; 50000:
+    if categories.GROSS &lt;= 130000:
         result = -(categories.GROSS - 50000) * 0.10
         </field>
     </record>
@@ -112,8 +112,8 @@ if categories.GROSS &gt; 500000:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = 0.0
-if categories.GROSS &gt; 1300000:
-    if categories.GROSS &lt;= 2800000:
+if categories.GROSS &gt; 130000:
+    if categories.GROSS &lt;= 280000:
         result = -(categories.GROSS - 130000) * 0.15
         </field>
     </record>
@@ -125,8 +125,8 @@ if categories.GROSS &gt; 1300000:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = 0.0
-if categories.GROSS &gt; 2800000:
-    if categories.GROSS &lt;= 5300000:
+if categories.GROSS &gt; 280000:
+    if categories.GROSS &lt;= 530000:
         result = -(categories.GROSS - 280000) * 0.2
         </field>
     </record>
@@ -154,7 +154,7 @@ if categories.GROSS &gt; 530000:
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">IPTS Tax Relief</field>
         <field name="code">IPTSR</field>
-        <field name="sequence">161</field>
+        <field name="sequence">171</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = categories.IPTSR</field>
     </record>
@@ -163,7 +163,7 @@ if categories.GROSS &gt; 530000:
         <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Single No Children</field>
         <field name="code">SNK</field>
-        <field name="sequence">160</field>
+        <field name="sequence">170</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
@@ -177,7 +177,7 @@ result = employee.marital not in ["married","widowed","divorced"] and employee.c
         <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Single up to 6 Children</field>
         <field name="code">SUK</field>
-        <field name="sequence">160</field>
+        <field name="sequence">170</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
@@ -191,7 +191,7 @@ result = employee.marital not in ["married","widowed","divorced"] and employee.c
         <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Single more than 6 Children</field>
         <field name="code">SMK</field>
-        <field name="sequence">160</field>
+        <field name="sequence">170</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
@@ -206,7 +206,7 @@ result = employee.marital not in ["married","widowed","divorced"] and employee.c
         <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Married No Children</field>
         <field name="code">MNK</field>
-        <field name="sequence">160</field>
+        <field name="sequence">170</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
@@ -221,7 +221,7 @@ result = employee.marital in ["married","widowed","divorced"] and employee.child
         <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Married up to 6 Children</field>
         <field name="code">MUK</field>
-        <field name="sequence">160</field>
+        <field name="sequence">170</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
@@ -235,7 +235,7 @@ result = employee.marital in ["married","widowed","divorced"] and employee.child
         <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Married more than 6 Children</field>
         <field name="code">SMK</field>
-        <field name="sequence">160</field>
+        <field name="sequence">170</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
@@ -249,7 +249,7 @@ result = employee.marital in ["married","widowed","divorced"] and employee.child
         <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
         <field name="name">IPTS Net</field>
         <field name="code">IPTSNET</field>
-        <field name="sequence">170</field>
+        <field name="sequence">172</field>
         <field name="amount_select">code</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="amount_python_compute">result = categories.IPTS + categories.IPTSR</field>
