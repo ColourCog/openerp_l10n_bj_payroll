@@ -18,7 +18,8 @@
         <field eval="0" name="customer"/>
     </record>
     <record id="contrib_register_ipts" model="hr.contribution.register">
-        <field name="name">Fiscal Administration</field>
+        <field name="name">IPTS</field>
+        <field name="note">Impot Par Tranche Salariale</field>
         <field name="partner_id" ref="res_partner_pp"/>
     </record>
     <record id="contrib_register_aib" model="hr.contribution.register">
@@ -27,13 +28,29 @@
     </record>
     <record id="contrib_register_vps" model="hr.contribution.register">
         <field name="name">VPS</field>
+        <field name="note">Versement Patronal sur Salaire</field>
         <field name="partner_id" ref="res_partner_pp"/>
     </record>
 
 <!-- HR SALARY RULE CATEGORIES-->
+    <record id="hr_payroll_category_cnss" model="hr.salary.rule.category">
+        <field name="parent_id" ref="hr_payroll.DED"/>
+        <field name="name">CNSS</field>
+        <field name="code">CNSS</field>
+    </record>
+    <record id="hr_payroll_category_aib" model="hr.salary.rule.category">
+        <field name="parent_id" ref="hr_payroll.DED"/>
+        <field name="name">AIB</field>
+        <field name="code">AIB</field>
+    </record>
     <record id="hr_payroll_category_ipts" model="hr.salary.rule.category">
+        <field name="parent_id" ref="hr_payroll.DED"/>
         <field name="name">IPTS</field>
         <field name="code">IPTS</field>
+    </record>
+    <record id="hr_payroll_category_ipts_calc" model="hr.salary.rule.category">
+        <field name="name">IPTS Calculation</field>
+        <field name="code">IPTSC</field>
     </record>
     <record id="hr_payroll_category_ipts_relief" model="hr.salary.rule.category">
         <field name="name">IPTS Relief</field>
@@ -44,36 +61,50 @@
         <field name="code">ECC</field>
     </record>
     <record id="hr_payroll_category_company_contributions" model="hr.salary.rule.category">
-        <field name="name">Employee Contributions</field>
+        <field name="name">Employer Contributions</field>
         <field name="code">CCC</field>
+    </record>
+    <record id="hr_payroll_category_intermediary_sums" model="hr.salary.rule.category">
+        <field name="name">Intermediary Sums</field>
+        <field name="code">IMMS</field>
     </record>
 
 <!-- HR SALARY RULES-->
     <record id="hr_payroll_rules_vps_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_company_contributions"/>
-        <field name="name">Versement Patronal sur Salaire</field>
-        <field name="code">VPS</field>
-        <field name="sequence">111</field>
+        <field name="name">VPS Register</field>
+        <field name="code">VPSREG</field>
+        <field name="sequence">110</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
-        <field name="amount_percentage">-16.4</field>
+        <field name="amount_percentage">16.4</field>
         <field name="register_id" ref="contrib_register_vps"/>
     </record>
     <record id="hr_payroll_rules_cnss_rule" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">Caisse Nationale de Securite Sociale</field>
+        <field name="category_id" ref="hr_payroll_category_cnss"/>
+        <field name="name">CNSS</field>
         <field name="code">CNSS</field>
-        <field name="sequence">110</field>
+        <field name="sequence">111</field>
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
         <field name="amount_percentage">-3.6</field>
+    </record>
+    <record id="hr_payroll_rules_cnss_register" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
+        <field name="name">CNSS Register</field>
+        <field name="code">CNSSREG</field>
+        <field name="sequence">112</field>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = - categories.CNSS</field>
         <field name="register_id" ref="contrib_register_cnss"/>
     </record>
     <record id="hr_payroll_rules_aib_rule" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="category_id" ref="hr_payroll_category_aib"/>
         <field name="name">AIB</field>
         <field name="code">AIB</field>
         <field name="sequence">110</field>
@@ -81,10 +112,20 @@
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
         <field name="amount_percentage">-5</field>
+    </record>
+    <record id="hr_payroll_rules_aib_register" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
+        <field name="name">AIB Register</field>
+        <field name="code">AIBREG</field>
+        <field name="sequence">111</field>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = - categories.AIB</field>
         <field name="register_id" ref="contrib_register_aib"/>
     </record>
     <record id="hr_payroll_rules_ipts_level1" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts"/>
+        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
         <field name="name">IPTS 0-50000</field>
         <field name="code">IPTS1</field>
         <field name="sequence">160</field>
@@ -92,7 +133,7 @@
         <field name="amount_fix">0.00</field>
     </record>
     <record id="hr_payroll_rules_ipts_level2" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts"/>
+        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
         <field name="name">IPTS 50000-130000</field>
         <field name="code">IPTS2</field>
         <field name="sequence">161</field>
@@ -100,12 +141,13 @@
         <field name="amount_python_compute">
 result = 0.0
 if categories.GROSS &gt; 50000:
+    result = -8000.0
     if categories.GROSS &lt;= 130000:
         result = -(categories.GROSS - 50000) * 0.10
         </field>
     </record>
     <record id="hr_payroll_rules_ipts_level3" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts"/>
+        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
         <field name="name">IPTS 130000-280000</field>
         <field name="code">IPTS3</field>
         <field name="sequence">162</field>
@@ -113,12 +155,13 @@ if categories.GROSS &gt; 50000:
         <field name="amount_python_compute">
 result = 0.0
 if categories.GROSS &gt; 130000:
+    result = -22500.0
     if categories.GROSS &lt;= 280000:
         result = -(categories.GROSS - 130000) * 0.15
         </field>
     </record>
     <record id="hr_payroll_rules_ipts_level4" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts"/>
+        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
         <field name="name">IPTS 280000-530000</field>
         <field name="code">IPTS4</field>
         <field name="sequence">163</field>
@@ -126,12 +169,13 @@ if categories.GROSS &gt; 130000:
         <field name="amount_python_compute">
 result = 0.0
 if categories.GROSS &gt; 280000:
+    result = -50000.0
     if categories.GROSS &lt;= 530000:
         result = -(categories.GROSS - 280000) * 0.2
         </field>
     </record>
     <record id="hr_payroll_rules_ipts_level5" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts"/>
+        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
         <field name="name">IPTS 530000+</field>
         <field name="code">IPTS5</field>
         <field name="sequence">164</field>
@@ -143,20 +187,12 @@ if categories.GROSS &gt; 530000:
         </field>
     </record>
     <record id="hr_payroll_rules_ipts" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">IPTS Brut</field>
+        <field name="category_id" ref="hr_payroll_category_intermediary_sums"/>
+        <field name="name">Gross IPTS</field>
         <field name="code">IPTS</field>
         <field name="sequence">165</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = categories.IPTS</field>
-    </record>
-    <record id="hr_payroll_rules_ipts_relief" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">IPTS Tax Relief</field>
-        <field name="code">IPTSR</field>
-        <field name="sequence">171</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = categories.IPTSR</field>
+        <field name="amount_python_compute">result = categories.IPTSC</field>
     </record>
     <record id="hr_payroll_rules_ipts_relief1" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
@@ -167,43 +203,40 @@ if categories.GROSS &gt; 530000:
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = employee.marital not in ["married","widowed","divorced"] and employee.children == 0
+result = employee.marital == "single" and employee.children == 0
         </field>
         <field name="amount_select">fix</field>
         <field name="amount_fix">0.00</field>
     </record>
     <record id="hr_payroll_rules_ipts_relief2" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
-        <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Single up to 6 Children</field>
         <field name="code">SUK</field>
         <field name="sequence">170</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = employee.marital not in ["married","widowed","divorced"] and employee.children &gt; 0 and employee.children &lt; 7
+result = employee.marital == "single" and employee.children &gt; 0 and employee.children &lt; 7
         </field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = -(categories.IPTS * ((employee.children * 10) - ((employee.children - 1) * 5 )) /100)</field>
+        <field name="amount_python_compute">result = -(categories.IPTSC * ((employee.children * 10) - ((employee.children - 1) * 5 )) /100)</field>
     </record>
     <record id="hr_payroll_rules_ipts_relief3" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
-        <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Single more than 6 Children</field>
         <field name="code">SMK</field>
         <field name="sequence">170</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = employee.marital not in ["married","widowed","divorced"] and employee.children &gt; 6
+result = employee.marital == "single" and employee.children &gt; 6
         </field>
         <field name="amount_select">percentage</field>
-        <field name="amount_percentage_base">categories.IPTS</field>
+        <field name="amount_percentage_base">categories.IPTSC</field>
         <field name="amount_percentage">-35</field>
     </record>
     <record id="hr_payroll_rules_ipts_relief4" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
-        <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Married No Children</field>
         <field name="code">MNK</field>
         <field name="sequence">170</field>
@@ -213,12 +246,11 @@ result = employee.marital not in ["married","widowed","divorced"] and employee.c
 result = employee.marital in ["married","widowed","divorced"] and employee.children == 0
         </field>
         <field name="amount_select">percentage</field>
-        <field name="amount_percentage_base">categories.IPTS</field>
+        <field name="amount_percentage_base">categories.IPTSC</field>
         <field name="amount_percentage">-10</field>
     </record>
     <record id="hr_payroll_rules_ipts_relief5" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
-        <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Married up to 6 Children</field>
         <field name="code">MUK</field>
         <field name="sequence">170</field>
@@ -228,11 +260,10 @@ result = employee.marital in ["married","widowed","divorced"] and employee.child
 result = employee.marital in ["married","widowed","divorced"] and employee.children &gt; 0 and employee.children &lt; 7
         </field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = -(categories.IPTS * ((employee.children * 10) - ((employee.children - 2) * 5 )) /100)</field>
+        <field name="amount_python_compute">result = -(categories.IPTSC * ((employee.children * 10) - ((employee.children - 2) * 5 )) /100)</field>
     </record>
     <record id="hr_payroll_rules_ipts_relief6" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
-        <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Married more than 6 Children</field>
         <field name="code">SMK</field>
         <field name="sequence">170</field>
@@ -242,17 +273,34 @@ result = employee.marital in ["married","widowed","divorced"] and employee.child
 result = employee.marital in ["married","widowed","divorced"] and employee.children &gt; 6
         </field>
         <field name="amount_select">percentage</field>
-        <field name="amount_percentage_base">categories.IPTS</field>
+        <field name="amount_percentage_base">categories.IPTSC</field>
         <field name="amount_percentage">-40</field>
     </record>
+    <record id="hr_payroll_rules_ipts_relief" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_intermediary_sums"/>
+        <field name="name">IPTS Tax Relief</field>
+        <field name="code">IPTSR</field>
+        <field name="sequence">171</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.IPTSR</field>
+    </record>
     <record id="hr_payroll_rules_ipts_net" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
-        <field name="name">IPTS Net</field>
+        <field name="category_id" ref="hr_payroll_category_ipts"/>
+        <field name="name">Net IPTS</field>
         <field name="code">IPTSNET</field>
         <field name="sequence">172</field>
+        <field name="appears_on_payslip" eval="True"/>
         <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.IPTSC + categories.IPTSR</field>
+    </record>
+    <record id="hr_payroll_rules_ipts_register" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
+        <field name="name">IPTS Register</field>
+        <field name="code">IPTSREG</field>
+        <field name="sequence">173</field>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="amount_python_compute">result = categories.IPTS + categories.IPTSR</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = -categories.IPTS</field>
         <field name="register_id" ref="contrib_register_ipts"/>
     </record>
     </data>
