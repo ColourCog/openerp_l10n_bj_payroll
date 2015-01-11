@@ -70,23 +70,47 @@
     </record>
 
 <!-- HR SALARY RULES-->
-    <record id="hr_payroll_rules_vps_rule" model="hr.salary.rule">
+    <record id="hr_payroll_rules_prorisk_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_company_contributions"/>
-        <field name="name">VPS Register</field>
-        <field name="code">VPSREG</field>
+        <field name="name"> Worker Compensation Insurance Register</field>
+        <field name="code">PROREG</field>
         <field name="sequence">110</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
-        <field name="amount_percentage">16.4</field>
+        <field name="amount_percentage">1.0</field>
+        <field name="register_id" ref="contrib_register_vps"/>
+    </record>
+    <record id="hr_payroll_rules_family_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_company_contributions"/>
+        <field name="name">Family Prestations Register</field>
+        <field name="code">FAMREG</field>
+        <field name="sequence">111</field>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">percentage</field>
+        <field name="amount_percentage_base">categories.GROSS</field>
+        <field name="amount_percentage">9.0</field>
+        <field name="register_id" ref="contrib_register_vps"/>
+    </record>
+    <record id="hr_payroll_rules_empportion_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_company_contributions"/>
+        <field name="name">Employer Portion</field>
+        <field name="code">EMPREG</field>
+        <field name="sequence">112</field>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">percentage</field>
+        <field name="amount_percentage_base">categories.GROSS</field>
+        <field name="amount_percentage">6.4</field>
         <field name="register_id" ref="contrib_register_vps"/>
     </record>
     <record id="hr_payroll_rules_cnss_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_cnss"/>
         <field name="name">CNSS</field>
         <field name="code">CNSS</field>
-        <field name="sequence">111</field>
+        <field name="sequence">121</field>
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
@@ -96,7 +120,7 @@
         <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
         <field name="name">CNSS Register</field>
         <field name="code">CNSSREG</field>
-        <field name="sequence">112</field>
+        <field name="sequence">122</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
@@ -107,7 +131,7 @@
         <field name="category_id" ref="hr_payroll_category_aib"/>
         <field name="name">AIB</field>
         <field name="code">AIB</field>
-        <field name="sequence">110</field>
+        <field name="sequence">130</field>
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
@@ -117,7 +141,7 @@
         <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
         <field name="name">AIB Register</field>
         <field name="code">AIBREG</field>
-        <field name="sequence">111</field>
+        <field name="sequence">131</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
