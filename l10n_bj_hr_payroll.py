@@ -10,6 +10,8 @@ class res_company(osv.osv):
         "cnss_number": fields.integer("CNSS number"),
         "insae_number": fields.integer("INSAE number"),
         "ifu_number": fields.integer("IFU number"),
+        "activity": fields.char('Activity', size=256),
+        "other_name": fields.char('Other Name', size=256),
     }
 res_company()
 

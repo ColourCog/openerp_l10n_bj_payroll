@@ -14,6 +14,8 @@
                             <field name="ifu_number"/>
                             <field name="cnss_number"/>
                             <field name="insae_number"/>
+                            <field name="activity"/>
+                            <field name="other_name"/>
                         </group>
                      </xpath>
                 </data>
