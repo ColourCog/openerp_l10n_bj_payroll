@@ -5,8 +5,6 @@
     'author': 'ColourCog.com',
     'depends': [
         'hr_payroll',
-        'hr_payroll_account',
-        'l10n_syscohada'
     ],
     'version': '1.0',
     'description': """

@@ -365,6 +365,29 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="register_id" ref="hr_payroll.contrib_register_employees"/>
     </record>
 
+<!-- HR SALARY STRUCTURES-->
+    <record id="hr_structure_cnss" model="hr.payroll.structure">
+        <field name="code">CNSS</field>
+        <field name="name">CNSS Base Rule</field>
+        <field eval="[(6, 0, [ref('hr_payroll_rules_cnss_rule'),ref('hr_payroll_rules_cnss_register'),ref('hr_payroll_rules_prorisk_rule'),ref('hr_payroll_rules_family_rule'),ref('hr_payroll_rules_empportion_rule')])]" name="rule_ids"/>
+        <field name="company_id" ref="base.main_company"/>    
+        <field name="parent_id" ref="hr_payroll.structure_base"/>
+    </record>
+    <record id="hr_structure_ipts" model="hr.payroll.structure">
+        <field name="code">IPTS</field>
+        <field name="name">IPTS Base Rule</field>
+        <field eval="[(6, 0, [ref('hr_payroll_rules_vps_register'), ref('hr_payroll_rules_ipts_level1'),ref('hr_payroll_rules_ipts_level2'),ref('hr_payroll_rules_ipts_level3'),ref('hr_payroll_rules_ipts_level4'),ref('hr_payroll_rules_ipts_level5'),ref('hr_payroll_rules_ipts'),ref('hr_payroll_rules_ipts_relief1'),ref('hr_payroll_rules_ipts_relief2'),ref('hr_payroll_rules_ipts_relief3'),ref('hr_payroll_rules_ipts_relief4'),ref('hr_payroll_rules_ipts_relief5'),ref('hr_payroll_rules_ipts_relief6'),ref('hr_payroll_rules_ipts_relief'),ref('hr_payroll_rules_ipts_net'),ref('hr_payroll_rules_ipts_register')])]" name="rule_ids"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="parent_id" ref="hr_structure_cnss"/>
+        </record>
+    <record id="hr_structure_aib" model="hr.payroll.structure">
+        <field name="code">AIB</field>
+        <field name="name">AIB Base Rule</field>
+        <field eval="[(6, 0, [ref('hr_payroll_rules_aib_rule'),ref('hr_payroll_rules_aib_register')])]" name="rule_ids"/>
+        <field name="company_id" ref="base.main_company"/>    
+        <field name="parent_id" ref="hr_structure_cnss"/>
+    </record>
+
     </data>
 </openerp>
 
