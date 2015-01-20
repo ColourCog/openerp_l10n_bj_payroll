@@ -92,8 +92,8 @@
         <field name="amount_percentage_base">categories.GROSS</field>
         <field name="amount_percentage">1.0</field>
         <field name="register_id" ref="contrib_register_cnss"/>
-        <field name="account_debit" ref="pcg_6641"/>
-        <field name="account_credit" ref="pcg_4312"/>
+        <field name="account_debit" ref="l10n_syscohada.pcg_6641"/>
+        <field name="account_credit" ref="l10n_syscohada.pcg_4312"/>
     </record>
     <record id="hr_payroll_rules_family_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_company_contributions"/>
@@ -107,8 +107,8 @@
         <field name="amount_percentage_base">categories.GROSS</field>
         <field name="amount_percentage">9.0</field>
         <field name="register_id" ref="contrib_register_cnss"/>
-        <field name="account_debit" ref="pcg_6641"/>
-        <field name="account_credit" ref="pcg_4311"/>
+        <field name="account_debit" ref="l10n_syscohada.pcg_6641"/>
+        <field name="account_credit" ref="l10n_syscohada.pcg_4311"/>
     </record>
     <record id="hr_payroll_rules_empportion_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_company_contributions"/>
@@ -122,8 +122,8 @@
         <field name="amount_percentage_base">categories.GROSS</field>
         <field name="amount_percentage">6.4</field>
         <field name="register_id" ref="contrib_register_cnss"/>
-        <field name="account_debit" ref="pcg_6641"/>
-        <field name="account_credit" ref="pcg_4313"/>
+        <field name="account_debit" ref="l10n_syscohada.pcg_6641"/>
+        <field name="account_credit" ref="l10n_syscohada.pcg_4313"/>
     </record>
     <record id="hr_payroll_rules_cnss_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_cnss"/>
@@ -146,8 +146,8 @@
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = - categories.CNSS</field>
         <field name="register_id" ref="contrib_register_cnss"/>
-        <field name="account_debit" ref="pcg_6611"/>
-        <field name="account_credit" ref="pcg_4313"/>
+        <field name="account_debit" ref="l10n_syscohada.pcg_6611"/>
+        <field name="account_credit" ref="l10n_syscohada.pcg_4313"/>
     </record>
     <record id="hr_payroll_rules_aib_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_aib"/>
@@ -170,8 +170,8 @@
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = - categories.AIB</field>
         <field name="register_id" ref="contrib_register_aib"/>
-        <field name="account_debit" ref="pcg_6611"/>
-        <field name="account_credit" ref="pcg_4472"/>
+        <field name="account_debit" ref="l10n_syscohada.pcg_6611"/>
+        <field name="account_credit" ref="l10n_syscohada.pcg_4472"/>
     </record>
     <record id="hr_payroll_rules_vps_register" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
@@ -363,8 +363,8 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = -categories.IPTS</field>
         <field name="register_id" ref="contrib_register_ipts"/>
-        <field name="account_debit" ref="pcg_6611"/>
-        <field name="account_credit" ref="pcg_4472"/>
+        <field name="account_debit" ref="l10n_syscohada.pcg_6611"/>
+        <field name="account_credit" ref="l10n_syscohada.pcg_4472"/>
     </record>
     <record id="hr_rule_net" model="hr.salary.rule">
         <field name="name">Net</field>
@@ -374,9 +374,9 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.DED</field>
-        <field name="register_id" ref="contrib_register_employees"/>
-        <field name="account_debit" ref="pcg_6611"/>
-        <field name="account_credit" ref="pcg_422"/>
+        <field name="register_id" ref="hr_payroll.contrib_register_employees"/>
+        <field name="account_debit" ref="l10n_syscohada.pcg_6611"/>
+        <field name="account_credit" ref="l10n_syscohada.pcg_422"/>
     </record>
 
     </data>
