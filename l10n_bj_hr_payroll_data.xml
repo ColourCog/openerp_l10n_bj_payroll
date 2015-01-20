@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+    <data noupdate="0">
 <!-- CONTRIBUTION REGISTERS -->
     <record id="res_partner_cnss" model="res.partner">
         <field name="name">Caisse Nationale de Sécurité Sociale (CNSS)</field>
@@ -17,6 +17,10 @@
         <field name="supplier">1</field>
         <field eval="0" name="customer"/>
     </record>
+    <record id="contrib_register_gross" model="hr.contribution.register">
+        <field name="name">GROSS</field>
+        <field name="note">Gross Register</field>
+    </record>
     <record id="contrib_register_ipts" model="hr.contribution.register">
         <field name="name">IPTS</field>
         <field name="note">Impot Par Tranche Salariale</field>
@@ -24,6 +28,7 @@
     </record>
     <record id="contrib_register_aib" model="hr.contribution.register">
         <field name="name">AIB</field>
+        <field name="note">Acompte Assis sur les Bénéfices</field>
         <field name="partner_id" ref="res_partner_pp"/>
     </record>
     <record id="contrib_register_vps" model="hr.contribution.register">
@@ -70,9 +75,15 @@
     </record>
 
 <!-- HR SALARY RULES-->
+    <record id="hr_payroll.hr_rule_taxable" model="hr.salary.rule">
+        <field name="name">Gross</field>
+        <field name="code">GROSS</field>
+        <field name="register_id" ref="contrib_register_gross"/>
+    </record>
     <record id="hr_payroll_rules_prorisk_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_company_contributions"/>
-        <field name="name"> Worker Compensation Insurance Register</field>
+        <field name="name">Professional risk</field>
+        <field name="note">Employer Contribution to professional risk fund</field>
         <field name="code">PROREG</field>
         <field name="sequence">110</field>
         <field name="appears_on_payslip" eval="False"/>
@@ -80,11 +91,14 @@
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
         <field name="amount_percentage">1.0</field>
-        <field name="register_id" ref="contrib_register_vps"/>
+        <field name="register_id" ref="contrib_register_cnss"/>
+        <field name="account_debit" ref="pcg_6641"/>
+        <field name="account_credit" ref="pcg_4312"/>
     </record>
     <record id="hr_payroll_rules_family_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_company_contributions"/>
-        <field name="name">Family Prestations Register</field>
+        <field name="name">Family Benefits</field>
+        <field name="note">Employer Contribution to family benefits fund</field>
         <field name="code">FAMREG</field>
         <field name="sequence">111</field>
         <field name="appears_on_payslip" eval="False"/>
@@ -92,11 +106,14 @@
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
         <field name="amount_percentage">9.0</field>
-        <field name="register_id" ref="contrib_register_vps"/>
+        <field name="register_id" ref="contrib_register_cnss"/>
+        <field name="account_debit" ref="pcg_6641"/>
+        <field name="account_credit" ref="pcg_4311"/>
     </record>
     <record id="hr_payroll_rules_empportion_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_company_contributions"/>
-        <field name="name">Employer Portion</field>
+        <field name="name">Mandatory Retirement Fund</field>
+        <field name="note">Employer Contribution to retirement fund</field>
         <field name="code">EMPREG</field>
         <field name="sequence">112</field>
         <field name="appears_on_payslip" eval="False"/>
@@ -104,11 +121,13 @@
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
         <field name="amount_percentage">6.4</field>
-        <field name="register_id" ref="contrib_register_vps"/>
+        <field name="register_id" ref="contrib_register_cnss"/>
+        <field name="account_debit" ref="pcg_6641"/>
+        <field name="account_credit" ref="pcg_4313"/>
     </record>
     <record id="hr_payroll_rules_cnss_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_cnss"/>
-        <field name="name">CNSS</field>
+        <field name="name">Caisse Nationale de Securite Sociale</field>
         <field name="code">CNSS</field>
         <field name="sequence">121</field>
         <field name="condition_select">none</field>
@@ -119,6 +138,7 @@
     <record id="hr_payroll_rules_cnss_register" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
         <field name="name">CNSS Register</field>
+        <field name="note">Employee Contribution to retirement fund</field>
         <field name="code">CNSSREG</field>
         <field name="sequence">122</field>
         <field name="appears_on_payslip" eval="False"/>
@@ -126,6 +146,8 @@
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = - categories.CNSS</field>
         <field name="register_id" ref="contrib_register_cnss"/>
+        <field name="account_debit" ref="pcg_6611"/>
+        <field name="account_credit" ref="pcg_4313"/>
     </record>
     <record id="hr_payroll_rules_aib_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_aib"/>
@@ -140,6 +162,7 @@
     <record id="hr_payroll_rules_aib_register" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
         <field name="name">AIB Register</field>
+        <field name="note">Acompte Assis sur les Bénéfices</field>
         <field name="code">AIBREG</field>
         <field name="sequence">131</field>
         <field name="appears_on_payslip" eval="False"/>
@@ -147,6 +170,20 @@
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = - categories.AIB</field>
         <field name="register_id" ref="contrib_register_aib"/>
+        <field name="account_debit" ref="pcg_6611"/>
+        <field name="account_credit" ref="pcg_4472"/>
+    </record>
+    <record id="hr_payroll_rules_vps_register" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
+        <field name="name">VPS Register</field>
+        <field name="note">Versement Patronal sur Salaire</field>
+        <field name="code">VPSREG</field>
+        <field name="sequence">132</field>
+        <field name="appears_on_payslip" eval="False"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">percentage</field>
+        <field name="amount_percentage">2</field>
+        <field name="register_id" ref="contrib_register_vps"/>
     </record>
     <record id="hr_payroll_rules_ipts_level1" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
@@ -220,7 +257,6 @@ if categories.GROSS &gt; 530000:
     </record>
     <record id="hr_payroll_rules_ipts_relief1" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
-        <field name="parent_rule_id" ref="hr_payroll_rules_ipts_relief"/>
         <field name="name">IPTS Relief Single No Children</field>
         <field name="code">SNK</field>
         <field name="sequence">170</field>
@@ -267,7 +303,7 @@ result = employee.marital == "single" and employee.children &gt; 6
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = employee.marital in ["married","widowed","divorced"] and employee.children == 0
+result = employee.marital in ["married","widower","divorced"] and employee.children == 0
         </field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.IPTSC</field>
@@ -281,7 +317,7 @@ result = employee.marital in ["married","widowed","divorced"] and employee.child
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = employee.marital in ["married","widowed","divorced"] and employee.children &gt; 0 and employee.children &lt; 7
+result = employee.marital in ["married","widower","divorced"] and employee.children &gt; 0 and employee.children &lt; 7
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = -(categories.IPTSC * ((employee.children * 10) - ((employee.children - 2) * 5 )) /100)</field>
@@ -294,7 +330,7 @@ result = employee.marital in ["married","widowed","divorced"] and employee.child
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = employee.marital in ["married","widowed","divorced"] and employee.children &gt; 6
+result = employee.marital in ["married","widower","divorced"] and employee.children &gt; 6
         </field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.IPTSC</field>
@@ -320,13 +356,29 @@ result = employee.marital in ["married","widowed","divorced"] and employee.child
     <record id="hr_payroll_rules_ipts_register" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
         <field name="name">IPTS Register</field>
+        <field name="note">Impot Par Tranche Salariale</field>
         <field name="code">IPTSREG</field>
         <field name="sequence">173</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = -categories.IPTS</field>
         <field name="register_id" ref="contrib_register_ipts"/>
+        <field name="account_debit" ref="pcg_6611"/>
+        <field name="account_credit" ref="pcg_4472"/>
     </record>
+    <record id="hr_rule_net" model="hr.salary.rule">
+        <field name="name">Net</field>
+        <field name="sequence" eval="200"/>
+        <field name="code">NET</field>
+        <field name="category_id" ref="hr_payroll.NET"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.DED</field>
+        <field name="register_id" ref="contrib_register_employees"/>
+        <field name="account_debit" ref="pcg_6611"/>
+        <field name="account_credit" ref="pcg_422"/>
+    </record>
+
     </data>
 </openerp>
 

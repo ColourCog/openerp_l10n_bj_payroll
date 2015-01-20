@@ -3,7 +3,11 @@
     'name': 'Benin - Payroll',
     'category': 'Localization',
     'author': 'ColourCog.com',
-    'depends': ['hr_payroll'],
+    'depends': [
+        'hr_payroll',
+        'hr_payroll_account',
+        'l10n_syscohada'
+    ],
     'version': '1.0',
     'description': """
 Benin Payroll Rules.
@@ -11,6 +15,13 @@ Benin Payroll Rules.
 
     * Employee Details
     * CNSS, IPTS, AIB, VPS
+    
+    TODO:
+    * Generate Custom reports for social security and Fiscal Administration
+    * Check and warn for missing Partner on employee (needed for vouchers)
+    * Set default Payable Accounts for Payroll Partners
+    * Automate payment voucher generation for Net payment
+    * Create Bank/Cash Payment method  for voucher
     """,
     'data':[
         'l10n_bj_hr_payroll_view.xml',
