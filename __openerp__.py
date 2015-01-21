@@ -10,16 +10,14 @@
     'description': """
 Benin Payroll Rules.
 ======================
-
-    * Employee Details
-    * CNSS, IPTS, AIB, VPS
-    
-    TODO:
-    * Generate Custom reports for social security and Fiscal Administration
-    * Check and warn for missing Partner on employee (needed for vouchers)
-    * Set default Payable Accounts for Payroll Partners
-    * Automate payment voucher generation for Net payment
-    * Create Bank/Cash Payment method  for voucher
+This module creates salary rules to handle Benin (bj) payroll.
+Specifically this module allows companies to handle:
+    * CNSS 
+    *IPTS
+    *AIB
+    *VPS
+This module also creates salary structures that incorporate these rules.
+They may be used as-is, or as bases to location-specific rules.
     """,
     'data':[
         'l10n_bj_hr_payroll_view.xml',
