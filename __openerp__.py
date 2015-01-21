@@ -20,7 +20,6 @@ This module also creates salary structures that incorporate these rules.
 They may be used as-is, or as bases to location-specific rules.
     """,
     'data':[
-        'l10n_bj_hr_payroll_view.xml',
         'l10n_bj_hr_payroll_data.xml',
     ],
     "installable": True,

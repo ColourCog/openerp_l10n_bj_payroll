@@ -172,6 +172,7 @@
         <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
+        <field name="amount_percentage_base">categories.GROSS</field>
         <field name="amount_percentage">2</field>
         <field name="register_id" ref="contrib_register_vps"/>
     </record>
