@@ -21,6 +21,7 @@ They may be used as-is, or as bases to location-specific rules.
     """,
     'data':[
         'l10n_bj_hr_payroll_data.xml',
+        'l10n_bj_hr_payroll_view.xml',
     ],
     "installable": True,
     "auto_install": False,
