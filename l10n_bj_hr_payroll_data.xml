@@ -355,7 +355,7 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="amount_python_compute">result = -categories.IPTS</field>
         <field name="register_id" ref="contrib_register_ipts"/>
     </record>
-    <record id="hr_rule_net" model="hr.salary.rule">
+    <record id="hr_payroll.hr_rule_net" model="hr.salary.rule">
         <field name="name">Net</field>
         <field name="sequence" eval="200"/>
         <field name="code">NET</field>
@@ -363,7 +363,7 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.DED</field>
-        <field name="register_id" ref="hr_payroll.contrib_register_employees"/>
+        <field name="register_id" eval="False"/>
     </record>
 
 <!-- HR SALARY STRUCTURES-->
