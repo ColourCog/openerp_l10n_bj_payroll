@@ -6,16 +6,17 @@
     'depends': [
         'hr_payroll',
     ],
-    'version': '1.0',
+    'version': '1.1',
     'description': """
 Benin Payroll Rules.
 ======================
 This module creates salary rules to handle Benin (bj) payroll.
 Specifically this module allows companies to handle:
     * CNSS 
-    *IPTS
-    *AIB
-    *VPS
+    * IPRR
+    * AIB
+    * VPS
+    
 This module also creates salary structures that incorporate these rules.
 They may be used as-is, or as bases to location-specific rules.
     """,
