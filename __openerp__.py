@@ -13,7 +13,7 @@ Benin Payroll Rules.
 This module creates salary rules to handle Benin (bj) payroll.
 Specifically this module allows companies to handle:
     * CNSS 
-    * IPRR
+    * IRPP
     * AIB
     * VPS
     
