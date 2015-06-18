@@ -14,7 +14,7 @@
         <field name="partner_id" ref="res_partner_cnss"/>
     </record>
     <record id="res_partner_pp" model="res.partner">
-        <field name="name">Administration Fiscale</field>
+        <field name="name">Direction Générale des Impôts et des Domaines (DGTCP)</field>
         <field name="lang">fr_FR</field>
         <field name="supplier">1</field>
         <field eval="0" name="customer"/>
@@ -23,7 +23,7 @@
         <field name="name">GROSS</field>
         <field name="note">Gross Register</field>
     </record>
-    <record id="contrib_register_ipts" model="hr.contribution.register">
+    <record id="contrib_register_irpp" model="hr.contribution.register">
         <field name="name">IRPP</field>
         <field name="note">Impot Par Tranche Salariale</field>
         <field name="partner_id" ref="res_partner_pp"/>
@@ -50,16 +50,16 @@
         <field name="name">AIB</field>
         <field name="code">AIB</field>
     </record>
-    <record id="hr_payroll_category_ipts" model="hr.salary.rule.category">
+    <record id="hr_payroll_category_irpp" model="hr.salary.rule.category">
         <field name="parent_id" ref="hr_payroll.DED"/>
         <field name="name">IRPP</field>
         <field name="code">IRPP</field>
     </record>
-    <record id="hr_payroll_category_ipts_calc" model="hr.salary.rule.category">
+    <record id="hr_payroll_category_irpp_calc" model="hr.salary.rule.category">
         <field name="name">IRPP Calculation</field>
         <field name="code">IRPPC</field>
     </record>
-    <record id="hr_payroll_category_ipts_relief" model="hr.salary.rule.category">
+    <record id="hr_payroll_category_irpp_relief" model="hr.salary.rule.category">
         <field name="name">IRPP Relief</field>
         <field name="code">IRPPR</field>
     </record>
@@ -178,16 +178,16 @@
         <field name="amount_percentage">2</field>
         <field name="register_id" ref="contrib_register_vps"/>
     </record>
-    <record id="hr_payroll_rules_ipts_level1" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
+    <record id="hr_payroll_rules_irpp_level1" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_calc"/>
         <field name="name">IRPP 0-50000</field>
         <field name="code">IRPP1</field>
         <field name="sequence">160</field>
         <field name="amount_select">fix</field>
         <field name="amount_fix">0.00</field>
     </record>
-    <record id="hr_payroll_rules_ipts_level2" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
+    <record id="hr_payroll_rules_irpp_level2" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_calc"/>
         <field name="name">IRPP 50000-130000</field>
         <field name="code">IRPP2</field>
         <field name="sequence">161</field>
@@ -200,8 +200,8 @@ if categories.GROSS &gt; 50000:
         result = -(categories.GROSS - 50000) * 0.10
         </field>
     </record>
-    <record id="hr_payroll_rules_ipts_level3" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
+    <record id="hr_payroll_rules_irpp_level3" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_calc"/>
         <field name="name">IRPP 130000-280000</field>
         <field name="code">IRPP3</field>
         <field name="sequence">162</field>
@@ -214,8 +214,8 @@ if categories.GROSS &gt; 130000:
         result = -(categories.GROSS - 130000) * 0.15
         </field>
     </record>
-    <record id="hr_payroll_rules_ipts_level4" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
+    <record id="hr_payroll_rules_irpp_level4" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_calc"/>
         <field name="name">IRPP 280000-530000</field>
         <field name="code">IRPP4</field>
         <field name="sequence">163</field>
@@ -228,8 +228,8 @@ if categories.GROSS &gt; 280000:
         result = -(categories.GROSS - 280000) * 0.2
         </field>
     </record>
-    <record id="hr_payroll_rules_ipts_level5" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_calc"/>
+    <record id="hr_payroll_rules_irpp_level5" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_calc"/>
         <field name="name">IRPP 530000+</field>
         <field name="code">IRPP5</field>
         <field name="sequence">164</field>
@@ -240,7 +240,7 @@ if categories.GROSS &gt; 530000:
         result = -(categories.GROSS - 530000) * 0.35
         </field>
     </record>
-    <record id="hr_payroll_rules_ipts" model="hr.salary.rule">
+    <record id="hr_payroll_rules_irpp" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_intermediary_sums"/>
         <field name="name">Gross IRPP</field>
         <field name="code">IRPP</field>
@@ -248,8 +248,8 @@ if categories.GROSS &gt; 530000:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = categories.IRPPC</field>
     </record>
-    <record id="hr_payroll_rules_ipts_relief1" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
+    <record id="hr_payroll_rules_irpp_relief1" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_relief"/>
         <field name="name">IRPP Relief Single No Children</field>
         <field name="code">SNK</field>
         <field name="sequence">170</field>
@@ -261,8 +261,8 @@ result = employee.marital == "single" and employee.children == 0
         <field name="amount_select">fix</field>
         <field name="amount_fix">0.00</field>
     </record>
-    <record id="hr_payroll_rules_ipts_relief2" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
+    <record id="hr_payroll_rules_irpp_relief2" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_relief"/>
         <field name="name">IRPP Relief Single up to 6 Children</field>
         <field name="code">SUK</field>
         <field name="sequence">170</field>
@@ -274,8 +274,8 @@ result = employee.marital == "single" and employee.children &gt; 0 and employee.
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = -(categories.IRPPC * ((employee.children * 10) - ((employee.children - 1) * 5 )) /100)</field>
     </record>
-    <record id="hr_payroll_rules_ipts_relief3" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
+    <record id="hr_payroll_rules_irpp_relief3" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_relief"/>
         <field name="name">IRPP Relief Single more than 6 Children</field>
         <field name="code">SMK</field>
         <field name="sequence">170</field>
@@ -288,8 +288,8 @@ result = employee.marital == "single" and employee.children &gt; 6
         <field name="amount_percentage_base">categories.IRPPC</field>
         <field name="amount_percentage">-35</field>
     </record>
-    <record id="hr_payroll_rules_ipts_relief4" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
+    <record id="hr_payroll_rules_irpp_relief4" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_relief"/>
         <field name="name">IRPP Relief Married No Children</field>
         <field name="code">MNK</field>
         <field name="sequence">170</field>
@@ -302,8 +302,8 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="amount_percentage_base">categories.IRPPC</field>
         <field name="amount_percentage">-10</field>
     </record>
-    <record id="hr_payroll_rules_ipts_relief5" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
+    <record id="hr_payroll_rules_irpp_relief5" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_relief"/>
         <field name="name">IRPP Relief Married up to 6 Children</field>
         <field name="code">MUK</field>
         <field name="sequence">170</field>
@@ -315,8 +315,8 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = -(categories.IRPPC * ((employee.children * 10) - ((employee.children - 2) * 5 )) /100)</field>
     </record>
-    <record id="hr_payroll_rules_ipts_relief6" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts_relief"/>
+    <record id="hr_payroll_rules_irpp_relief6" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp_relief"/>
         <field name="name">IRPP Relief Married more than 6 Children</field>
         <field name="code">SMK</field>
         <field name="sequence">170</field>
@@ -329,7 +329,7 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="amount_percentage_base">categories.IRPPC</field>
         <field name="amount_percentage">-40</field>
     </record>
-    <record id="hr_payroll_rules_ipts_relief" model="hr.salary.rule">
+    <record id="hr_payroll_rules_irpp_relief" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_intermediary_sums"/>
         <field name="name">IRPP Tax Relief</field>
         <field name="code">IRPPR</field>
@@ -337,8 +337,8 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = categories.IRPPR</field>
     </record>
-    <record id="hr_payroll_rules_ipts_net" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll_category_ipts"/>
+    <record id="hr_payroll_rules_irpp_net" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll_category_irpp"/>
         <field name="name">Net IRPP</field>
         <field name="code">IRPPNET</field>
         <field name="sequence">172</field>
@@ -346,7 +346,7 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = categories.IRPPC + categories.IRPPR</field>
     </record>
-    <record id="hr_payroll_rules_ipts_register" model="hr.salary.rule">
+    <record id="hr_payroll_rules_irpp_register" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_category_employee_contributions"/>
         <field name="name">IRPP Register</field>
         <field name="note">Impot Par Tranche Salariale</field>
@@ -355,7 +355,7 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="appears_on_payslip" eval="False"/>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = -categories.IRPP</field>
-        <field name="register_id" ref="contrib_register_ipts"/>
+        <field name="register_id" ref="contrib_register_irpp"/>
     </record>
     <record id="hr_payroll.hr_rule_net" model="hr.salary.rule">
         <field name="name">Net</field>
@@ -373,13 +373,13 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="code">CNSS</field>
         <field name="name">CNSS Base Rule</field>
         <field eval="[(6, 0, [ref('hr_payroll_rules_cnss_rule'),ref('hr_payroll_rules_cnss_register'),ref('hr_payroll_rules_prorisk_rule'),ref('hr_payroll_rules_family_rule'),ref('hr_payroll_rules_empportion_rule')])]" name="rule_ids"/>
-        <field name="company_id" ref="base.main_company"/>    
+        <field name="company_id" ref="base.main_company"/>
         <field name="parent_id" ref="hr_payroll.structure_base"/>
     </record>
-    <record id="hr_structure_ipts" model="hr.payroll.structure">
+    <record id="hr_structure_irpp" model="hr.payroll.structure">
         <field name="code">IRPP</field>
         <field name="name">IRPP Base Rule</field>
-        <field eval="[(6, 0, [ref('hr_payroll_rules_vps_register'), ref('hr_payroll_rules_ipts_level1'),ref('hr_payroll_rules_ipts_level2'),ref('hr_payroll_rules_ipts_level3'),ref('hr_payroll_rules_ipts_level4'),ref('hr_payroll_rules_ipts_level5'),ref('hr_payroll_rules_ipts'),ref('hr_payroll_rules_ipts_relief1'),ref('hr_payroll_rules_ipts_relief2'),ref('hr_payroll_rules_ipts_relief3'),ref('hr_payroll_rules_ipts_relief4'),ref('hr_payroll_rules_ipts_relief5'),ref('hr_payroll_rules_ipts_relief6'),ref('hr_payroll_rules_ipts_relief'),ref('hr_payroll_rules_ipts_net'),ref('hr_payroll_rules_ipts_register')])]" name="rule_ids"/>
+        <field eval="[(6, 0, [ref('hr_payroll_rules_vps_register'), ref('hr_payroll_rules_irpp_level1'),ref('hr_payroll_rules_irpp_level2'),ref('hr_payroll_rules_irpp_level3'),ref('hr_payroll_rules_irpp_level4'),ref('hr_payroll_rules_irpp_level5'),ref('hr_payroll_rules_irpp'),ref('hr_payroll_rules_irpp_relief1'),ref('hr_payroll_rules_irpp_relief2'),ref('hr_payroll_rules_irpp_relief3'),ref('hr_payroll_rules_irpp_relief4'),ref('hr_payroll_rules_irpp_relief5'),ref('hr_payroll_rules_irpp_relief6'),ref('hr_payroll_rules_irpp_relief'),ref('hr_payroll_rules_irpp_net'),ref('hr_payroll_rules_irpp_register')])]" name="rule_ids"/>
         <field name="company_id" ref="base.main_company"/>
         <field name="parent_id" ref="hr_structure_cnss"/>
         </record>
@@ -387,7 +387,7 @@ result = employee.marital in ["married","widower","divorced"] and employee.child
         <field name="code">AIB</field>
         <field name="name">AIB Base Rule</field>
         <field eval="[(6, 0, [ref('hr_payroll_rules_aib_rule'),ref('hr_payroll_rules_aib_register')])]" name="rule_ids"/>
-        <field name="company_id" ref="base.main_company"/>    
+        <field name="company_id" ref="base.main_company"/>
         <field name="parent_id" ref="hr_structure_cnss"/>
     </record>
 
